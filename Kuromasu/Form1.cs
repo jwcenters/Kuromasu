@@ -39,7 +39,7 @@ namespace Kuromasu
       start[2, 9] = new Cell(7);
       start[2, 10] = new Cell(2);
       start[8, 10] = new Cell(5);
-      board = new Board(start);
+      board = new Board(start,11,11);
 
     }
 
