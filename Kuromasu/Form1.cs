@@ -74,7 +74,7 @@ namespace Kuromasu
                     {
                         visString = board[i, j].WhiteCellsInVision.ToString();
                         graphics.DrawString(visString, 
-                            new Font(new FontFamily("Arial"),Math.Min(rowSpan,colSpan) / 2),
+                            new Font(new FontFamily("Arial"),Math.Max(Math.Min(rowSpan,colSpan) / 2,1)),
                             Brushes.Black, rect.X + (i * colSpan),
                             rect.Y + (j * rowSpan));
                     }
