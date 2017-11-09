@@ -10,11 +10,121 @@ using System.Windows.Forms;
 
 namespace Kuromasu
 {
-  public partial class Form1 : Form
-  {
-    public Form1()
+    public partial class Form1 : Form
     {
-      InitializeComponent();
+        Cell[,] board;
+        public Form1()
+        {
+            InitializeComponent();
+            this.Paint += DrawBoard;
+            this.ResizeRedraw = true;
+
+            //create solveable grid to start with, maybe introduce some database of solveable grids later
+            Cell[,] start = new Cell[11, 11];
+            start[2, 0] = new Cell(9);
+            start[8, 0] = new Cell(8);
+            start[8, 1] = new Cell(7);
+            start[4, 2] = new Cell(12);
+            start[10, 2] = new Cell(16);
+            start[0, 3] = new Cell(9);
+            start[1, 4] = new Cell(10);
+            start[2, 5] = new Cell(12);
+            start[4, 5] = new Cell(8);
+            start[6, 5] = new Cell(11);
+            start[8, 5] = new Cell(3);
+            start[9, 6] = new Cell(3);
+            start[10, 7] = new Cell(3);
+            start[0, 8] = new Cell(7);
+            start[6, 8] = new Cell(2);
+            start[2, 9] = new Cell(7);
+            start[2, 10] = new Cell(2);
+            start[8, 10] = new Cell(5);
+            board = start;
+            
+        }
+
+        public void DrawBoard(Object sender, PaintEventArgs e)
+        {
+            Graphics graphics = this.CreateGraphics();
+            graphics.Clear(this.BackColor);
+            int rows = board.GetUpperBound(0) + 1 - board.GetLowerBound(0);
+            int columns = board.GetUpperBound(1) + 1 - board.GetLowerBound(1);
+            Rectangle rect = new Rectangle(this.Width / 2 - 20, 20, this.Width / 2 - 20, this.Height - 80);
+            int colSpan = rect.Width / columns;
+            int rowSpan = rect.Height / rows;
+
+            graphics.FillRectangle(Brushes.White, rect);
+            graphics.DrawRectangle(Pens.Black, rect);
+            for(int i = 1; i < columns; i++)
+            {
+                graphics.DrawLine(Pens.Black, rect.X + (i * colSpan), rect.Y, rect.X + (i * colSpan), rect.Bottom);
+            }
+
+            for(int i = 1; i < rows; i++)
+            {
+                graphics.DrawLine(Pens.Black, rect.X, rect.Y + (i * rowSpan), rect.Right, rect.Y + (i * rowSpan));
+            }
+
+            string visString;
+            for(int i = 0; i < rows; i++)
+            {
+                for(int j = 0; j < columns; j++)
+                {
+                    if(board[i,j] != null)
+                    {
+                        visString = board[i, j].WhiteCellsInVision.ToString();
+                        graphics.DrawString(visString, 
+                            new Font(new FontFamily("Arial"),Math.Min(rowSpan,colSpan) / 2),
+                            Brushes.Black, rect.X + (i * colSpan),
+                            rect.Y + (j * rowSpan));
+                    }
+                }
+            }
+        }
     }
-  }
+
+
+    //use cells to keep track on a board?
+    public class Cell
+    {
+        public int x;
+        public int y;
+        public int WhiteCellsInVision;
+        public Cell(int x, int y, int vis)
+        {
+            this.x = x;
+            this.y = y;
+            this.WhiteCellsInVision = vis;
+        }
+
+        public Cell(int vis)
+        {
+            this.WhiteCellsInVision = vis;
+        }
+        public Cell()
+        {
+            
+        }
+    }
+
+    //or we could use a board class to track Cells (just use WhiteCellsInVision from Cell class and not x,y)
+    public class Board
+    {
+        public Cell[,] contents;
+
+        public Board(int x, int y) {
+          this.contents  = new Cell[x, y];
+        }
+
+        public Board(Cell[,] cells)
+        {
+            this.contents = cells;
+        }
+
+        public Board()
+        {
+            contents = null;
+        }
+    }
+    
 }
