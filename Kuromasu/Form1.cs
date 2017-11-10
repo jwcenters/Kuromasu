@@ -82,9 +82,9 @@ namespace Kuromasu
             }
             else if(board.contents[i,j].isGreyCell == true)
             {
-              graphics.FillRectangle(Brushes.Gray, rect.X + (i * colSpan),
-                  rect.Y + (j * rowSpan), rect.X + ((i+1) * colSpan),
-                  rect.Y + ((j+1) * rowSpan));
+              graphics.FillRectangle(Brushes.LightGray, rect.X + (i * colSpan) + 1,
+                  rect.Y + (j * rowSpan) + 1, colSpan - 1,
+                  rowSpan - 1);
             }
           }
         }
@@ -142,7 +142,10 @@ namespace Kuromasu
         {
           if (this.contents[i, j] == null)
           {
-            this.contents[i, j].isGreyCell = true;
+            this.contents[i, j] = new Cell()
+            {
+              isGreyCell = true
+            };
           }
         }
       }
