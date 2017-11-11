@@ -86,6 +86,12 @@ namespace Kuromasu
                   rect.Y + (j * rowSpan) + 1, colSpan - 1,
                   rowSpan - 1);
             }
+            else if(board.contents[i,j].isBlackCell == true)
+            {
+              graphics.FillRectangle(Brushes.Black, rect.X + (i * colSpan) + 1,
+                  rect.Y + (j * rowSpan) + 1, colSpan - 1,
+                  rowSpan - 1);
+            }
           }
         }
       }
