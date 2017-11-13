@@ -12,7 +12,7 @@ namespace Kuromasu
 {
   public partial class Form1 : Form
   {
-    Board board;
+    Board1 board;
     public Form1()
     {
       InitializeComponent();
@@ -39,7 +39,7 @@ namespace Kuromasu
       start[2, 9] = new Cell(7);
       start[2, 10] = new Cell(2);
       start[8, 10] = new Cell(5);
-      board = new Board(start,11,11);
+      board = new Board1(start,11,11);
 
     }
 
@@ -127,17 +127,17 @@ namespace Kuromasu
   }
 
   //or we could use a board class to track Cells (just use WhiteCellsInVision from Cell class and not x,y)
-  public class Board
+  public class Board1
   {
     public Cell[,] contents;
     int rows, columns;
 
-    public Board(int x, int y)
+    public Board1(int x, int y)
     {
       this.contents = new Cell[x, y];
     }
 
-    public Board(Cell[,] cells, int rows, int columns)
+    public Board1(Cell[,] cells, int rows, int columns)
     {
       this.rows = rows;
       this.columns = columns;
@@ -157,7 +157,7 @@ namespace Kuromasu
       }
     }
 
-    public Board()
+    public Board1()
     {
       contents = null;
     }
